@@ -25,3 +25,30 @@ if 1:
 
     # Display the plot
     plt.show()
+
+    cases_data = data.groupby(['year', 'income_group'])['possible_cancer_cases'].mean().reset_index()
+    print(cases_data)
+
+    # Create the line plot using seaborn
+    sns.lineplot(data=cases_data, x='year', y='possible_cancer_cases', hue='income_group')
+
+    # Set the labels and title of the plot
+    plt.xlabel('Year')
+    plt.ylabel('Mean Possible Cases')
+    plt.title('Mean Possible Cases by Income Group over time')
+
+    # Display the plot
+    plt.show()
+
+    deaths_data = data.groupby(['year', 'income_group'])['possible_cancer_deaths'].mean().reset_index()
+    print(deaths_data)
+
+    # Create the line plot using seaborn
+    sns.lineplot(data=deaths_data, x='year', y='possible_cancer_deaths', hue='income_group')
+
+    # Set the labels and title of the plot
+    plt.xlabel('Year')
+    plt.ylabel('Mean Possible Deaths')
+    plt.title('Mean Possible Deaths by Income Group over time')
+    plt.show()
+
