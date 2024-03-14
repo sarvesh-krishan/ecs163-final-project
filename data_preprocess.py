@@ -54,3 +54,27 @@ if 1:
     plt.title('Mean Possible Deaths by Income Group over time')
     plt.show()
 
+    # Filter the data for the years 2010 and 2021
+    cases_endpoints = cases_data[(cases_data['year'] == 2010) | (cases_data['year'] == 2021)]
+
+    # Pivot the filtered data
+    pivot_table_cases = cases_endpoints.pivot_table(index='income_group', columns='year', values='possible_cancer_cases')
+
+    # Calculate the average rate of change for each income group
+    average_rate_of_change_cases = (pivot_table_cases[2021] - pivot_table_cases[2010]) / (2021 - 2010)
+
+    # Print the average rate of change for each income group
+    print("\nAverage Rate of Change for Possible Cases by", average_rate_of_change_cases)
+
+    # Filter the data for the years 2010 and 2021
+    deaths_endpoints = deaths_data[(deaths_data['year'] == 2010) | (deaths_data['year'] == 2021)]
+
+    # Pivot the filtered data
+    pivot_table_deaths = deaths_endpoints.pivot_table(index='income_group', columns='year', values='possible_cancer_deaths')
+
+    # Calculate the average rate of change for each income group
+    average_rate_of_change_deaths = (pivot_table_deaths[2021] - pivot_table_deaths[2010]) / (2021 - 2010)
+
+    # Print the average rate of change for each income group
+    print("\nAverage Rate of Change for Possible Deaths by", average_rate_of_change_deaths)
+

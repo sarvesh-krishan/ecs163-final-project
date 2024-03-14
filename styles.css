@@ -40,3 +40,10 @@ h1 {
     color: inherit; /* Use the default text color */
     text-decoration: none; /* Remove the underline */
 }
+
+#visualization {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
