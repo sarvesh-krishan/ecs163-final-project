@@ -12,6 +12,7 @@ body {
 .article {
     width: 60%;
     min-height: 600px;
+    font-size: 20px;
     background-color: #029390;
     border-radius: 8px;
     padding: 20px;
