@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import geopandas as gpd
+
 
 if 1:
     print("Loading data...")
@@ -78,3 +80,23 @@ if 1:
     # Print the average rate of change for each income group
     print("\nAverage Rate of Change for Possible Deaths by", average_rate_of_change_deaths)
 
+    geodata = data_2020.drop(['region', 'year', 'assumption_type'], axis=1)
+    geodata["country_name"].replace("United States", "USA", inplace=True)
+    
+    # Load the GeoJSON
+    world = gpd.read_file('world.geojson')
+
+    # Extract only the relevant columns ('name', 'id', and 'geometry')
+    world = world[['name', 'id', 'geometry']]
+
+    # Merge data with the country boundaries dataset based on country names
+    merged_df = world.merge(geodata, left_on='name', right_on='country_name')
+
+    # Convert the merged DataFrame to a GeoDataFrame
+    gdf = gpd.GeoDataFrame(merged_df)
+
+    # Save the GeoDataFrame as a GeoJSON file
+    gdf.to_file('output.geojson', driver='GeoJSON')
+    print(geodata.describe())
+
+    
