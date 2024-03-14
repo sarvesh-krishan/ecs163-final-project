@@ -41,9 +41,9 @@ h1 {
     text-decoration: none; /* Remove the underline */
 }
 
-#visualization {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#map {
+    margin: 0 auto; /* Center horizontally */
+    display: block;
+    width: 60%;
+    height: 500px; /* Adjust the height as needed */
 }
