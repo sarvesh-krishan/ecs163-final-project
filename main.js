@@ -176,3 +176,20 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);
+
+var income_legend = L.control({position: 'bottomright'});
+
+income_legend.onAdd = function (map) {
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = ["High", "Upper Middle", "Lower Middle", "Low"];
+        income_colors = ['#1f77b4', '#d62728', '#2ca02c', '#ff7f0e']
+    div.innerHTML = '<h4>Income Group</h4>';
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + income_colors[i] + '"></i> ' +
+            grades[i] + '<br>';
+    }
+    return div;
+};
+
+income_legend.addTo(map);
