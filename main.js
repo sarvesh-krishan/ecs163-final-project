@@ -7,7 +7,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Define the color scale for the choropleth
-var colorScale = d3.scaleSequential(d3.interpolateBlues)
+var colorScale = d3.scaleSequential(d3.interpolatePurples)
 .domain([0, 1])
 
 
@@ -44,6 +44,36 @@ function zoomToFeature(e) {
   map.fitBounds(e.target.getBounds());
 }
 
+// Define the icons for each income group
+var icons = {
+  low: L.icon({
+    iconUrl: 'low_icon.png',
+    iconSize: [16, 16],
+    iconAnchor: [8, 16],
+    popupAnchor: [0, -16]
+  }),
+  lower_middle: L.icon({
+    iconUrl: 'lower_middle_icon.png',
+    iconSize: [16, 16],
+    iconAnchor: [8, 16],
+    popupAnchor: [0, -16]
+  }),
+  upper_middle: L.icon({
+    iconUrl: 'upper_middle_icon.png',
+    iconSize: [16, 16],
+    iconAnchor: [8, 16],
+    popupAnchor: [0, -16]
+  }),
+  high: L.icon({
+    iconUrl: 'high_icon.png',
+    iconSize: [16, 16],
+    iconAnchor: [8, 16],
+    popupAnchor: [0, -16]
+  })
+};
+
+
+
 // Load the GeoJSON data
 fetch('output.geojson')
   .then(response => response.json())
@@ -52,11 +82,24 @@ fetch('output.geojson')
       style: function(feature) {
         // Get the coverage value for the current country
         var coverage = feature.properties.coverage;
-        var possibleCases = feature.properties.possible_cancer_cases;
-        var possibleDeaths = feature.properties.possible_cancer_deaths;
 
         // Assign a color based on the coverage value
         var color = colorScale(coverage);
+
+        // Get the income group for the current country
+        var income_group = feature.properties.income_group;
+
+        // Determine the icon based on the income group
+        var icon;
+        if (income_group === 'Low') {
+          icon = icons.low;
+        } else if (income_group === 'Lower middle') {
+          icon = icons.lower_middle;
+        } else if (income_group === 'Upper middle') {
+          icon = icons.upper_middle;
+        } else if (income_group === 'High') {
+          icon = icons.high;
+        }
 
         // Return the style options for the current feature
         return {
@@ -74,6 +117,24 @@ fetch('output.geojson')
           mouseout: resetHighlight,
           click: zoomToFeature
         });
+
+        // Get the income group for the current country
+        var income_group = feature.properties.income_group;
+
+        // Determine the icon based on the income group
+        var icon;
+        if (income_group === 'Low') {
+          icon = icons.low;
+        } else if (income_group === 'Lower middle') {
+          icon = icons.lower_middle;
+        } else if (income_group === 'Upper middle') {
+          icon = icons.upper_middle;
+        } else if (income_group === 'High') {
+          icon = icons.high;
+        }
+
+        // Create and bind the marker with the appropriate icon
+        L.marker(layer.getBounds().getCenter(), { icon: icon }).addTo(map);
       }
     }).addTo(map);
   });
