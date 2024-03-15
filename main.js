@@ -151,6 +151,7 @@ fetch('output.geojson')
   info.update = function (props) {
     this._div.innerHTML = '<h4>Statistics</h4>' + (props ?
         '<b>' + props.name + '</b><br />' +
+        'Income: ' + props.income_group + '<br />' +
         'Coverage: ' + props.coverage + '<br />' +
         'Possible Cases: ' + props.possible_cancer_cases + '<br />' +
         'Possible Deaths: ' + props.possible_cancer_deaths
